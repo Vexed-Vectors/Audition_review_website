@@ -1,0 +1,84 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audition Website</title>
+    <style>
+        body{
+            background-color: black;
+        
+        }
+        h1{
+            color:#41f70a;
+            font-family: "Audiowide", monospace;
+        }
+        h3{
+            color: #41f70a;
+            font-family: "Audiowide", monospace;
+            
+        }
+        h4,h6{
+            color: #41f70a;
+            font-family: "Audiowide", monospace;
+        }
+        a{
+            color:#41f70a;
+            font-family: "Audiowide", monospace;
+            
+        }
+        input{
+            background-color:#1d0c45;
+            color: #d48e15;
+            font-family: "Ariel", monospace;
+        }
+
+        fieldset{
+            background-color: black;
+        }
+        
+    </style>
+    
+</head>
+
+
+<body>
+    {% if user.is_authenticated %}
+    <h1>Welcome {{user.username}}, to the questions panel</h1>    <strong><a href="{% url 'login' %}">Logout</a></strong>
+    {% else%}
+    <h1>Welcome to the questions panel</h1>            <strong><a href="{% url 'login' %}">Logout</a></strong>
+    {%endif%}
+
+    <hr><br>
+    <h4>All your responses are to be submitted here, your responses are stored here as well</h4>
+    <h6>Time left before auditions end</h6>
+    <br>
+    <h3></h3>
+
+    <!-- ###################TIMER SPACE  ###########-->
+    <form action="{% url 'questions' %}" method="post">
+        {% csrf_token%}
+        {% for question in questions%}
+
+        <fieldset>
+            <legend><h3>{{question}}</h3></legend>
+            
+                <input type="text" style="width:1000; height:100;" value="{{question.question_text_response}}" name="response{{forloop.counter}}" id="question.{{forloop.counter}}" >
+
+            
+            
+
+        </fieldset>
+    
+    
+    {% endfor%}
+
+    
+    <br>    <br>
+    <input type="submit">
+</form>
+    
+</body>
+</html>
